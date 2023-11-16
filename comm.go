@@ -10,6 +10,8 @@ const (
 	SecretKey  = "secret-key"
 	Endpoint   = "endpoint"
 	BucketName = "bucket-name"
+	ObjectName = "object-name"
+	Object     = "object"
 )
 
 func AccessKeyFlag() cli.Flag {
@@ -48,6 +50,22 @@ func BucketNameFlag() cli.Flag {
 	}
 }
 
+func ObjectNameFlag() cli.Flag {
+	return &cli.StringFlag{
+		Name:     ObjectName,
+		Usage:    "上传对象路径-URI",
+		Required: true,
+	}
+}
+
+func ObjectFlag() cli.Flag {
+	return &cli.StringFlag{
+		Name:     Object,
+		Usage:    "上传对象-字符串",
+		Required: true,
+	}
+}
+
 func CommonFlag() []cli.Flag {
 	return []cli.Flag{
 		AccessKeyFlag(),
@@ -66,4 +84,22 @@ func NewClient(accessKey string, secretKey string, endpoint string) (*oos.Client
 		return nil, err
 	}
 	return client, nil
+}
+
+// GetBucket get the bucket
+func GetBucket(accessKey string, secretKey string, endpoint string, bucketName string) (*oos.Object, error) {
+	// New client
+	client, err := NewClient(accessKey, secretKey, endpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get bucket
+	bucket, err := client.Bucket(bucketName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return bucket, nil
 }

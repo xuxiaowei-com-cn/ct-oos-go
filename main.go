@@ -57,6 +57,7 @@ func main() {
 		Copyright: Copyright,
 		Commands: []*cli.Command{
 			GetBucketLocationCommand(),
+			PutObjectCommand(),
 		},
 	}
 
