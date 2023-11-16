@@ -17,15 +17,15 @@ func PutFileCommand() *cli.Command {
 			var secretKey = context.String(common.SecretKey)
 			var endpoint = context.String(common.Endpoint)
 			var bucketName = context.String(common.BucketName)
-			var objectName = context.String(common.Uri)
+			var uri = context.String(common.Uri)
 			var file = context.String(common.File)
 
-			return PutObjectFromFile(accessKey, secretKey, endpoint, bucketName, objectName, file)
+			return PutObjectFromFile(accessKey, secretKey, endpoint, bucketName, uri, file)
 		},
 	}
 }
 
-func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, objectName string, file string) error {
+func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, uri string, file string) error {
 
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
@@ -33,7 +33,7 @@ func PutObjectFromFile(accessKey string, secretKey string, endpoint string, buck
 	}
 
 	// Upload an object with local file name, user need not open the file.
-	err = bucket.PutObjectFromFile(objectName, file)
+	err = bucket.PutObjectFromFile(uri, file)
 
 	if err != nil {
 		return err

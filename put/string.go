@@ -18,15 +18,15 @@ func PutStringCommand() *cli.Command {
 			var secretKey = context.String(common.SecretKey)
 			var endpoint = context.String(common.Endpoint)
 			var bucketName = context.String(common.BucketName)
-			var objectName = context.String(common.Uri)
+			var uri = context.String(common.Uri)
 			var str = context.String(common.String)
 
-			return PutObject(accessKey, secretKey, endpoint, bucketName, objectName, str)
+			return PutObject(accessKey, secretKey, endpoint, bucketName, uri, str)
 		},
 	}
 }
 
-func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, objectName string, str string) error {
+func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, uri string, str string) error {
 
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
@@ -34,7 +34,7 @@ func PutObject(accessKey string, secretKey string, endpoint string, bucketName s
 	}
 
 	// Upload an object from a string
-	err = bucket.PutObject(objectName, strings.NewReader(str))
+	err = bucket.PutObject(uri, strings.NewReader(str))
 	if err != nil {
 		return err
 	}
