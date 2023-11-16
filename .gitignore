@@ -34,8 +34,8 @@ build/
 
 /*.exe
 /*/*.exe
-/gitlab-go-windows-*
-/gitlab-go-linux-*
-/gitlab-go-darwin-*
+/ct-oos-go-windows-*
+/ct-oos-go-linux-*
+/ct-oos-go-darwin-*
 
 /buildinfo/buildinfo
