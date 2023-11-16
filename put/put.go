@@ -13,7 +13,7 @@ func PutCommand() *cli.Command {
 		Flags: append(common.CommonFlag(), common.UriFlag(false), common.StringFlag(false), common.FileFlag(false)),
 		Subcommands: []*cli.Command{
 			PutStringCommand(),
-			PutObjectFromFileCommand(),
+			PutFileCommand(),
 		},
 	}
 }

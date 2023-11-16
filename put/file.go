@@ -6,8 +6,8 @@ import (
 	"log"
 )
 
-// PutObjectFromFileCommand 上传 文件
-func PutObjectFromFileCommand() *cli.Command {
+// PutFileCommand 上传 文件
+func PutFileCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "file",
 		Usage: "上传 文件",
