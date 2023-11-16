@@ -58,7 +58,7 @@ func CommonFlag() []cli.Flag {
 }
 
 // NewClient create client
-func NewClient(accessKey string, secretKey, endpoint string) (*oos.Client, error) {
+func NewClient(accessKey string, secretKey string, endpoint string) (*oos.Client, error) {
 	clientOptionV4 := oos.V4Signature(true)
 	isEnableSha256 := oos.EnableSha256ForPayload(false)
 	client, err := oos.New(endpoint, accessKey, secretKey, clientOptionV4, isEnableSha256)
