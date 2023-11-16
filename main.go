@@ -55,7 +55,9 @@ func main() {
 		Authors:   []*cli.Author{{Name: Author, Email: Email}},
 		Usage:     Description,
 		Copyright: Copyright,
-		Commands:  []*cli.Command{},
+		Commands: []*cli.Command{
+			GetBucketLocationCommand(),
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
