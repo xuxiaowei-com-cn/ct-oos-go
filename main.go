@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/urfave/cli/v2"
+	"github.com/xuxiaowei-com-cn/ct-oos-go/bucket"
+	"github.com/xuxiaowei-com-cn/ct-oos-go/put"
 	"github.com/xuxiaowei-com-cn/git-go/buildinfo"
 	"gopkg.in/yaml.v3"
 	"log"
@@ -56,9 +58,9 @@ func main() {
 		Usage:     Description,
 		Copyright: Copyright,
 		Commands: []*cli.Command{
-			GetBucketLocationCommand(),
-			PutObjectCommand(),
-			PutObjectFromFileCommand(),
+			bucket.GetBucketLocationCommand(),
+			put.PutObjectCommand(),
+			put.PutObjectFromFileCommand(),
 		},
 	}
 

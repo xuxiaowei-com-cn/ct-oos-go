@@ -1,7 +1,8 @@
-package main
+package bucket
 
 import (
 	"github.com/urfave/cli/v2"
+	"github.com/xuxiaowei-com-cn/ct-oos-go/comm"
 	"log"
 )
 
@@ -9,12 +10,12 @@ func GetBucketLocationCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "get-bucket-location",
 		Usage: "获取 Bucket Location",
-		Flags: append(CommonFlag()),
+		Flags: append(comm.CommonFlag()),
 		Action: func(context *cli.Context) error {
-			var accessKey = context.String(AccessKey)
-			var secretKey = context.String(SecretKey)
-			var endpoint = context.String(Endpoint)
-			var bucketName = context.String(BucketName)
+			var accessKey = context.String(comm.AccessKey)
+			var secretKey = context.String(comm.SecretKey)
+			var endpoint = context.String(comm.Endpoint)
+			var bucketName = context.String(comm.BucketName)
 
 			return GetBucketLocation(accessKey, secretKey, endpoint, bucketName)
 		},
@@ -23,7 +24,7 @@ func GetBucketLocationCommand() *cli.Command {
 
 func GetBucketLocation(accessKey string, secretKey string, endpoint string, bucketName string) error {
 	// New client
-	client, err := NewClient(accessKey, secretKey, endpoint)
+	client, err := comm.NewClient(accessKey, secretKey, endpoint)
 	if err != nil {
 		return err
 	}

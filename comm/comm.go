@@ -1,4 +1,4 @@
-package main
+package comm
 
 import (
 	"github.com/urfave/cli/v2"
