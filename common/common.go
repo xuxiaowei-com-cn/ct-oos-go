@@ -1,4 +1,4 @@
-package comm
+package common
 
 import (
 	"github.com/urfave/cli/v2"
@@ -10,77 +10,87 @@ const (
 	SecretKey  = "secret-key"
 	Endpoint   = "endpoint"
 	BucketName = "bucket-name"
-	ObjectName = "object-name"
-	Object     = "object"
+	Uri        = "uri"
+	String     = "string"
 	File       = "file"
 )
 
-func AccessKeyFlag() cli.Flag {
+func AccessKeyFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     AccessKey,
 		EnvVars:  []string{"CT_OOS_ACCESS_KEY"},
 		Usage:    "天翼云 AccessKey",
-		Required: true,
+		Required: required,
 	}
 }
 
-func SecretKeyFlag() cli.Flag {
+func SecretKeyFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     SecretKey,
 		EnvVars:  []string{"CT_OOS_SECRET_KEY"},
 		Usage:    "天翼云 SecretKey",
-		Required: true,
+		Required: required,
 	}
 }
 
-func EndpointFlag() cli.Flag {
+func EndpointFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     Endpoint,
 		EnvVars:  []string{"CT_OOS_ENDPOINT"},
 		Usage:    "天翼云 Endpoint",
-		Required: true,
+		Required: required,
 	}
 }
 
-func BucketNameFlag() cli.Flag {
+func BucketNameFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     BucketName,
+		Aliases:  []string{"bucket"},
 		EnvVars:  []string{"CT_OOS_BUCKET_NAME"},
 		Usage:    "天翼云 bucketName",
-		Required: true,
+		Required: required,
 	}
 }
 
-func ObjectNameFlag() cli.Flag {
+func UriFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
-		Name:     ObjectName,
-		Usage:    "上传对象路径-URI",
-		Required: true,
+		Name:     Uri,
+		Usage:    "上传路径-URI",
+		Required: required,
 	}
 }
 
-func ObjectFlag() cli.Flag {
+func StringFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
-		Name:     Object,
-		Usage:    "上传对象-字符串",
-		Required: true,
+		Name:     String,
+		Usage:    "上传字符串",
+		Required: required,
 	}
 }
 
-func FileFlag() cli.Flag {
+func FileFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     File,
-		Usage:    "上传对象-文件",
-		Required: true,
+		Usage:    "上传文件",
+		Required: required,
 	}
 }
 
 func CommonFlag() []cli.Flag {
 	return []cli.Flag{
-		AccessKeyFlag(),
-		SecretKeyFlag(),
-		EndpointFlag(),
-		BucketNameFlag(),
+		AccessKeyFlag(false),
+		SecretKeyFlag(false),
+		EndpointFlag(false),
+		BucketNameFlag(false),
+	}
+}
+
+func CommonFlagRequired() []cli.Flag {
+	return []cli.Flag{
+		AccessKeyFlag(true),
+		SecretKeyFlag(true),
+		EndpointFlag(true),
+		BucketNameFlag(true),
 	}
 }
 

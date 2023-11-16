@@ -58,9 +58,8 @@ func main() {
 		Usage:     Description,
 		Copyright: Copyright,
 		Commands: []*cli.Command{
-			bucket.GetBucketLocationCommand(),
-			put.PutObjectCommand(),
-			put.PutObjectFromFileCommand(),
+			bucket.GetBucketCommand(),
+			put.PutCommand(),
 		},
 	}
 
