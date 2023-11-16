@@ -17,7 +17,7 @@ func PutObjectCommand() *cli.Command {
 			var endpoint = context.String(Endpoint)
 			var bucketName = context.String(BucketName)
 			var objectName = context.String(ObjectName)
-			var object = context.String(ObjectName)
+			var object = context.String(Object)
 
 			return PutObject(accessKey, secretKey, endpoint, bucketName, objectName, object)
 		},
