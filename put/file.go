@@ -4,6 +4,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/common"
 	"log"
+	"time"
 )
 
 // PutFileCommand 上传 文件
@@ -27,6 +28,9 @@ func PutFileCommand() *cli.Command {
 
 func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, uri string, file string) error {
 
+	start := time.Now()
+	log.Printf("上传 文件 开始")
+
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
 		return err
@@ -39,7 +43,7 @@ func PutObjectFromFile(accessKey string, secretKey string, endpoint string, buck
 		return err
 	}
 
-	log.Printf("上传文件完成")
+	log.Printf("上传 文件 结束（%s）", time.Since(start))
 
 	return nil
 }

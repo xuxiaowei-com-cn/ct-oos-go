@@ -5,6 +5,7 @@ import (
 	"github.com/xuxiaowei-com-cn/ct-oos-go/common"
 	"log"
 	"strings"
+	"time"
 )
 
 // PutStringCommand 上传 字符串
@@ -28,6 +29,9 @@ func PutStringCommand() *cli.Command {
 
 func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, uri string, str string) error {
 
+	start := time.Now()
+	log.Printf("上传 字符串 开始")
+
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
 		return err
@@ -39,7 +43,7 @@ func PutObject(accessKey string, secretKey string, endpoint string, bucketName s
 		return err
 	}
 
-	log.Printf("上传字符串完成")
+	log.Printf("上传 字符串 结束（%s）", time.Since(start))
 
 	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/common"
 	"log"
+	"time"
 )
 
 func GetLocationCommand() *cli.Command {
@@ -23,6 +24,10 @@ func GetLocationCommand() *cli.Command {
 }
 
 func GetLocation(accessKey string, secretKey string, endpoint string, bucketName string) error {
+
+	start := time.Now()
+	log.Printf("获取 location bucket 开始")
+
 	// New client
 	client, err := common.NewClient(accessKey, secretKey, endpoint)
 	if err != nil {
@@ -40,6 +45,8 @@ func GetLocation(accessKey string, secretKey string, endpoint string, bucketName
 	log.Printf("DataLocationType: %s\n", ret.DataLocationType)
 	log.Printf("DataLocationList: %s\n", ret.DataLocationList)
 	log.Printf("ScheduleStrategy: %s\n", ret.ScheduleStrategy)
+
+	log.Printf("获取 location bucket 结束（%s）", time.Since(start))
 
 	return nil
 }

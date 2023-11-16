@@ -5,6 +5,7 @@ import (
 	"github.com/xuxiaowei-com-cn/ct-oos-go-sdk/oos"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/common"
 	"log"
+	"time"
 )
 
 func UploadFileCommand() *cli.Command {
@@ -31,6 +32,9 @@ func UploadFileCommand() *cli.Command {
 func UploadFile(accessKey string, secretKey string, endpoint string, bucketName string, uri string, file string,
 	partSize int64, routine int) error {
 
+	start := time.Now()
+	log.Printf("分片上传 开始")
+
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
 		return err
@@ -41,7 +45,7 @@ func UploadFile(accessKey string, secretKey string, endpoint string, bucketName 
 		return err
 	}
 
-	log.Printf("分片上传文件完成")
+	log.Printf("分片上传 结束（%s）", time.Since(start))
 
 	return nil
 }
