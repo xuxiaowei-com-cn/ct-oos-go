@@ -24,6 +24,24 @@ func PutObjectCommand() *cli.Command {
 	}
 }
 
+func PutObjectFromFileCommand() *cli.Command {
+	return &cli.Command{
+		Name:  "put-object-from-file",
+		Usage: "上传 对象（文件）",
+		Flags: append(CommonFlag(), ObjectNameFlag(), FileFlag()),
+		Action: func(context *cli.Context) error {
+			var accessKey = context.String(AccessKey)
+			var secretKey = context.String(SecretKey)
+			var endpoint = context.String(Endpoint)
+			var bucketName = context.String(BucketName)
+			var objectName = context.String(ObjectName)
+			var file = context.String(File)
+
+			return PutObjectFromFile(accessKey, secretKey, endpoint, bucketName, objectName, file)
+		},
+	}
+}
+
 func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, objectName string, object string) error {
 
 	bucket, err := GetBucket(accessKey, secretKey, endpoint, bucketName)
@@ -31,13 +49,32 @@ func PutObject(accessKey string, secretKey string, endpoint string, bucketName s
 		return err
 	}
 
-	// Case 1: Upload an object from a string
+	// Upload an object from a string
 	err = bucket.PutObject(objectName, strings.NewReader(object))
 	if err != nil {
 		return err
 	}
 
-	log.Printf("上传完成")
+	log.Printf("上传字符串完成")
+
+	return nil
+}
+
+func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, objectName string, file string) error {
+
+	bucket, err := GetBucket(accessKey, secretKey, endpoint, bucketName)
+	if err != nil {
+		return err
+	}
+
+	// Upload an object with local file name, user need not open the file.
+	err = bucket.PutObjectFromFile(objectName, file)
+
+	if err != nil {
+		return err
+	}
+
+	log.Printf("上传文件完成")
 
 	return nil
 }

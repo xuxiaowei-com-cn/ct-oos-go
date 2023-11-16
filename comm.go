@@ -12,6 +12,7 @@ const (
 	BucketName = "bucket-name"
 	ObjectName = "object-name"
 	Object     = "object"
+	File       = "file"
 )
 
 func AccessKeyFlag() cli.Flag {
@@ -62,6 +63,14 @@ func ObjectFlag() cli.Flag {
 	return &cli.StringFlag{
 		Name:     Object,
 		Usage:    "上传对象-字符串",
+		Required: true,
+	}
+}
+
+func FileFlag() cli.Flag {
+	return &cli.StringFlag{
+		Name:     File,
+		Usage:    "上传对象-文件",
 		Required: true,
 	}
 }
