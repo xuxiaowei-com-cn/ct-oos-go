@@ -5,6 +5,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/bucket"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/put"
+	"github.com/xuxiaowei-com-cn/ct-oos-go/upload"
 	"github.com/xuxiaowei-com-cn/git-go/buildinfo"
 	"gopkg.in/yaml.v3"
 	"log"
@@ -60,6 +61,7 @@ func main() {
 		Commands: []*cli.Command{
 			bucket.GetBucketCommand(),
 			put.PutCommand(),
+			upload.UploadCommand(),
 		},
 	}
 

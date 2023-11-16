@@ -160,6 +160,7 @@ AUTHOR:
 COMMANDS:
    bucket   桶
    put      上传对象
+   upload   上传文件-分片
    help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
@@ -215,6 +216,32 @@ COPYRIGHT:
        --uri value                          上传路径-URI
        --string value                       上传字符串
        --file value                         上传文件
+       --help, -h                           show help
+    ```
+
+- upload
+
+    ```shell
+    $ go run main.go upload --help
+    NAME:
+       ct-oos-go upload - 上传文件-分片
+    
+    USAGE:
+       ct-oos-go upload command [command options] [arguments...]
+    
+    COMMANDS:
+       file     上传 文件-分片
+       help, h  Shows a list of commands or help for one command
+    
+    OPTIONS:
+       --access-key value                   天翼云 AccessKey [%CT_OOS_ACCESS_KEY%]
+       --secret-key value                   天翼云 SecretKey [%CT_OOS_SECRET_KEY%]
+       --endpoint value                     天翼云 Endpoint [%CT_OOS_ENDPOINT%]
+       --bucket-name value, --bucket value  天翼云 bucketName [%CT_OOS_BUCKET_NAME%]
+       --uri value                          上传路径-URI
+       --file value                         上传文件
+       --part-size value                    文件分片大小，单位 KB，分片数量不能超过 10000 (default: 100)
+       --routine value                      线程 (default: 3)
        --help, -h                           show help
     ```
 

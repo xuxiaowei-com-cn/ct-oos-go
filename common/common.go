@@ -13,6 +13,8 @@ const (
 	Uri        = "uri"
 	String     = "string"
 	File       = "file"
+	PartSize   = "part-size"
+	Routine    = "routine"
 )
 
 func AccessKeyFlag(required bool) cli.Flag {
@@ -72,6 +74,24 @@ func FileFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     File,
 		Usage:    "上传文件",
+		Required: required,
+	}
+}
+
+func PartSizeFlag(required bool) cli.Flag {
+	return &cli.IntFlag{
+		Name:     PartSize,
+		Usage:    "文件分片大小，单位 KB，分片数量不能超过 10000",
+		Value:    100,
+		Required: required,
+	}
+}
+
+func RoutineFlag(required bool) cli.Flag {
+	return &cli.IntFlag{
+		Name:     Routine,
+		Usage:    "线程",
+		Value:    3,
 		Required: required,
 	}
 }
