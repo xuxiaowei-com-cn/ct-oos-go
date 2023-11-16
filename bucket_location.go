@@ -24,6 +24,9 @@ func GetBucketLocationCommand() *cli.Command {
 func GetBucketLocation(accessKey string, secretKey, endpoint string, bucketName string) error {
 	// New client
 	client, err := NewClient(accessKey, secretKey, endpoint)
+	if err != nil {
+		return err
+	}
 
 	ret, err := client.GetBucketLocation(bucketName)
 	if err != nil {
