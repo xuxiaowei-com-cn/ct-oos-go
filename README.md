@@ -105,6 +105,10 @@
   </a>
 </div>
 
+## 可执行程序
+
+- Windows/Linux/Mac、x86/arm 可执行程序：https://github.com/xuxiaowei-com-cn/ct-oos-go/releases
+
 ## 开发命令
 
 ### get
@@ -306,3 +310,11 @@ go build
         go build -o buildinfo/buildinfo buildinfo/buildinfo.go
         GOOS=darwin GOARCH=arm64 go build -v -ldflags "-s -w -buildid= -X main.BuildDate=$(buildinfo/buildinfo now) -X main.Compiler= -X main.GitCommitBranch=$(buildinfo/buildinfo commitBranch) -X main.GitCommitSha=$(buildinfo/buildinfo commitSha) -X main.GitCommitShortSha=$(buildinfo/buildinfo commitShortSha) -X main.GitCommitTag=$(buildinfo/buildinfo commitTag) -X main.GitCommitTimestamp=$(buildinfo/buildinfo commitTimestamp) -X main.GitTreeState= -X main.GitVersion=$(buildinfo/buildinfo commitTag) -X main.GoVersion=$(buildinfo/buildinfo goShortVersion) -X main.Major= -X main.Minor= -X main.Revision= -X main.Platform=darwin/arm64 -X main.CiPipelineId= -X main.CiJobId=" -trimpath -o ct-oos-go-darwin-arm64 .
         ```
+
+## 文档
+
+1. [对象存储（经典版）I型 -> 文档下载 -> SDK及开发指南](https://www.ctyun.cn/document/10026693/10026825)
+    1. Go SDK 6.0
+        1. [OOS Go SDK 开发者指南-V6.pdf](https://oos-cn.ctyunapi.cn/docs/oos/sdk/Go/OOS%20Go%20SDK%20%E5%BC%80%E5%8F%91%E8%80%85%E6%8C%87%E5%8D%97-V6.pdf)
+        2. [ios-sdk-6.2.2.zip](https://oos-cn.ctyunapi.cn/sdk/oos/ios/ios-sdk-6.2.2.zip)
+        3. [oos-go-sdk-6.2.0.md5](https://oos-cn.ctyunapi.cn/sdk/oos/Go/oos-go-sdk-6.2.0.md5)
