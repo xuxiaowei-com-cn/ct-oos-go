@@ -13,6 +13,7 @@ const (
 	Uri        = "uri"
 	String     = "string"
 	File       = "file"
+	Folder     = "folder"
 	PartSize   = "part-size"
 	Routine    = "routine"
 )
@@ -73,6 +74,14 @@ func StringFlag(required bool) cli.Flag {
 func FileFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     File,
+		Usage:    "上传文件",
+		Required: required,
+	}
+}
+
+func FolderFlag(required bool) cli.Flag {
+	return &cli.StringFlag{
+		Name:     Folder,
 		Usage:    "上传文件",
 		Required: required,
 	}

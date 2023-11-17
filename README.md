@@ -206,6 +206,7 @@ COPYRIGHT:
     COMMANDS:
        string   上传 字符串
        file     上传 文件
+       folder   上传 文件夹
        help, h  Shows a list of commands or help for one command
     
     OPTIONS:
@@ -216,6 +217,7 @@ COPYRIGHT:
        --uri value                          上传路径-URI
        --string value                       上传字符串
        --file value                         上传文件
+       --folder value                       上传文件
        --help, -h                           show help
     ```
 
