@@ -13,7 +13,7 @@ func UploadFileCommand() *cli.Command {
 		Name:  "file",
 		Usage: "上传 文件-分片",
 		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FileFlag(true),
-			common.PartSizeFlag(false), common.RoutineFlag(false), common.ForceFlag()),
+			common.PartSizeFlag(), common.RoutineFlag(), common.ForceFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)

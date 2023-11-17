@@ -96,21 +96,19 @@ func ForceFlag() cli.Flag {
 	}
 }
 
-func PartSizeFlag(required bool) cli.Flag {
+func PartSizeFlag() cli.Flag {
 	return &cli.IntFlag{
-		Name:     PartSize,
-		Usage:    "文件分片大小，单位 KB，分片数量不能超过 10000",
-		Value:    100,
-		Required: required,
+		Name:  PartSize,
+		Usage: "文件分片大小，单位 KB，分片数量不能超过 10000",
+		Value: 100,
 	}
 }
 
-func RoutineFlag(required bool) cli.Flag {
+func RoutineFlag() cli.Flag {
 	return &cli.IntFlag{
-		Name:     Routine,
-		Usage:    "线程",
-		Value:    3,
-		Required: required,
+		Name:  Routine,
+		Usage: "线程",
+		Value: 3,
 	}
 }
 
