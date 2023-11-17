@@ -11,7 +11,7 @@ func PutCommand() *cli.Command {
 		Name:  "put",
 		Usage: "上传对象",
 		Flags: append(common.CommonFlag(), common.UriFlag(false), common.StringFlag(false),
-			common.FileFlag(false), common.FolderFlag(false)),
+			common.FileFlag(false), common.FolderFlag(false), common.ForceFlag()),
 		Subcommands: []*cli.Command{
 			PutStringCommand(),
 			PutFileCommand(),

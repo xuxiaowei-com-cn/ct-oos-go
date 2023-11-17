@@ -16,7 +16,8 @@ func PutFolderCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "folder",
 		Usage: "上传 文件夹",
-		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FolderFlag(true)),
+		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FolderFlag(true),
+			common.ForceFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -24,6 +25,9 @@ func PutFolderCommand() *cli.Command {
 			var bucketName = context.String(common.BucketName)
 			var uri = context.String(common.Uri)
 			var folder = context.String(common.Folder)
+			var force = context.Bool(common.Force)
+
+			log.Printf("是否开启强制上传：%t", force)
 
 			fileInfo, err := os.Stat(folder)
 			if err != nil {
@@ -31,7 +35,7 @@ func PutFolderCommand() *cli.Command {
 			}
 
 			if fileInfo.IsDir() {
-				return PutObjectFromFolder(accessKey, secretKey, endpoint, bucketName, uri, folder)
+				return PutObjectFromFolder(accessKey, secretKey, endpoint, bucketName, uri, folder, force)
 			} else {
 				return errors.New(fmt.Sprintf("路径 %s 不是一个文件夹", folder))
 			}
@@ -39,7 +43,7 @@ func PutFolderCommand() *cli.Command {
 	}
 }
 
-func PutObjectFromFolder(accessKey string, secretKey string, endpoint string, bucketName string, uri string, folder string) error {
+func PutObjectFromFolder(accessKey string, secretKey string, endpoint string, bucketName string, uri string, folder string, force bool) error {
 
 	start := time.Now()
 	log.Printf("上传 文件夹 开始")
@@ -71,6 +75,18 @@ func PutObjectFromFolder(accessKey string, secretKey string, endpoint string, bu
 		}
 
 		objectKey := uri + "/" + file
+
+		if !force {
+			exist, err := bucket.IsObjectExist(objectKey)
+			if err != nil {
+				return err
+			}
+
+			if exist {
+				log.Printf("文件 %s 已存在，跳过上传", objectKey)
+				return nil
+			}
+		}
 
 		// Upload an object with local file name, user need not open the file.
 		err = bucket.PutObjectFromFile(objectKey, path)

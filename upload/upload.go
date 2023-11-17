@@ -11,7 +11,7 @@ func UploadCommand() *cli.Command {
 		Name:  "upload",
 		Usage: "上传文件-分片",
 		Flags: append(common.CommonFlag(), common.UriFlag(false), common.FileFlag(false),
-			common.PartSizeFlag(false), common.RoutineFlag(false)),
+			common.PartSizeFlag(false), common.RoutineFlag(false), common.ForceFlag()),
 		Subcommands: []*cli.Command{
 			UploadFileCommand(),
 		},

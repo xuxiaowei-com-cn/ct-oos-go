@@ -13,7 +13,8 @@ func PutStringCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "string",
 		Usage: "上传 字符串",
-		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.StringFlag(true)),
+		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.StringFlag(true),
+			common.ForceFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -21,13 +22,16 @@ func PutStringCommand() *cli.Command {
 			var bucketName = context.String(common.BucketName)
 			var uri = context.String(common.Uri)
 			var str = context.String(common.String)
+			var force = context.Bool(common.Force)
 
-			return PutObject(accessKey, secretKey, endpoint, bucketName, uri, str)
+			log.Printf("是否开启强制上传：%t", force)
+
+			return PutObject(accessKey, secretKey, endpoint, bucketName, uri, str, force)
 		},
 	}
 }
 
-func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, uri string, str string) error {
+func PutObject(accessKey string, secretKey string, endpoint string, bucketName string, uri string, str string, force bool) error {
 
 	start := time.Now()
 	log.Printf("上传 字符串 开始")
@@ -35,6 +39,18 @@ func PutObject(accessKey string, secretKey string, endpoint string, bucketName s
 	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
 	if err != nil {
 		return err
+	}
+
+	if !force {
+		exist, err := bucket.IsObjectExist(uri)
+		if err != nil {
+			return err
+		}
+
+		if exist {
+			log.Printf("文件 %s 已存在，跳过上传", uri)
+			return nil
+		}
 	}
 
 	// Upload an object from a string

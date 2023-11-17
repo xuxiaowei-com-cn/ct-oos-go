@@ -218,6 +218,7 @@ COPYRIGHT:
        --string value                       上传字符串
        --file value                         上传文件
        --folder value                       上传文件
+       --force                              是否强制上传，会覆盖文件 (default: false)
        --help, -h                           show help
     ```
 
@@ -244,6 +245,7 @@ COPYRIGHT:
        --file value                         上传文件
        --part-size value                    文件分片大小，单位 KB，分片数量不能超过 10000 (default: 100)
        --routine value                      线程 (default: 3)
+       --force                              是否强制上传，会覆盖文件 (default: false)
        --help, -h                           show help
     ```
 

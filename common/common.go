@@ -14,6 +14,7 @@ const (
 	String     = "string"
 	File       = "file"
 	Folder     = "folder"
+	Force      = "force"
 	PartSize   = "part-size"
 	Routine    = "routine"
 )
@@ -84,6 +85,14 @@ func FolderFlag(required bool) cli.Flag {
 		Name:     Folder,
 		Usage:    "上传文件",
 		Required: required,
+	}
+}
+
+func ForceFlag() cli.Flag {
+	return &cli.BoolFlag{
+		Name:  Force,
+		Usage: "是否强制上传，会覆盖文件",
+		Value: false,
 	}
 }
 
