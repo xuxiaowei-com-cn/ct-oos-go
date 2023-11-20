@@ -96,7 +96,7 @@ func UploadFolder(accessKey string, secretKey string, endpoint string, bucketNam
 			}
 		}
 
-		err = bucket.UploadFile(uri, file, partSize*1024, oos.Routines(routine))
+		err = bucket.UploadFile(uri, file, partSize*1024*1024, oos.Routines(routine))
 
 		if err != nil {
 			return err
