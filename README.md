@@ -144,7 +144,7 @@ go run main.go
 - Linux 环境为 $xxx
 
 ```shell
-go run main.go help
+go run main.go --help
 ```
 
 ```shell
@@ -238,6 +238,7 @@ COPYRIGHT:
     
     COMMANDS:
        file     上传 文件-分片
+       folder   上传 文件夹-分片
        help, h  Shows a list of commands or help for one command
     
     OPTIONS:
@@ -247,6 +248,7 @@ COPYRIGHT:
        --bucket-name value, --bucket value  天翼云 bucketName [%CT_OOS_BUCKET_NAME%]
        --uri value                          上传路径-URI
        --file value                         上传文件
+       --folder value                       上传文件夹
        --part-size value                    文件分片大小，单位 KB，分片数量不能超过 10000 (default: 100)
        --routine value                      线程 (default: 3)
        --force                              是否强制上传，会覆盖文件 (default: false)
