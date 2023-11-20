@@ -45,6 +45,8 @@ func PutFolderCommand() *cli.Command {
 
 			if longFile {
 				flag = flag | log.Llongfile
+			} else {
+				flag = flag | log.Lshortfile
 			}
 
 			log.SetFlags(flag)
