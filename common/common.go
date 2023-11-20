@@ -1,22 +1,25 @@
 package common
 
 import (
+	"fmt"
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go-sdk/oos"
 )
 
 const (
-	AccessKey  = "access-key"
-	SecretKey  = "secret-key"
-	Endpoint   = "endpoint"
-	BucketName = "bucket-name"
-	Uri        = "uri"
-	String     = "string"
-	File       = "file"
-	Folder     = "folder"
-	Force      = "force"
-	PartSize   = "part-size"
-	Routine    = "routine"
+	AccessKey       = "access-key"
+	SecretKey       = "secret-key"
+	Endpoint        = "endpoint"
+	BucketName      = "bucket-name"
+	Uri             = "uri"
+	String          = "string"
+	File            = "file"
+	Folder          = "folder"
+	Force           = "force"
+	PartSize        = "part-size"
+	DefaultPartSize = 5 // 默认分片大小，单位 M
+	MinPartSize     = 5 // 最小分片大小，单位 M
+	Routine         = "routine"
 )
 
 func AccessKeyFlag(required bool) cli.Flag {
@@ -99,8 +102,8 @@ func ForceFlag() cli.Flag {
 func PartSizeFlag() cli.Flag {
 	return &cli.IntFlag{
 		Name:  PartSize,
-		Usage: "文件分片大小，单位 KB，分片数量不能超过 10000",
-		Value: 100,
+		Usage: fmt.Sprintf("文件分片大小，单位 M，最小值 %d M，分片数量不能超过 10000", MinPartSize),
+		Value: DefaultPartSize,
 	}
 }
 

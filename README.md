@@ -249,7 +249,7 @@ COPYRIGHT:
        --uri value                          上传路径-URI
        --file value                         上传文件
        --folder value                       上传文件夹
-       --part-size value                    文件分片大小，单位 KB，分片数量不能超过 10000 (default: 100)
+       --part-size value                    文件分片大小，单位 M，最小值 5 M，分片数量不能超过 10000 (default: 5)
        --routine value                      线程 (default: 3)
        --force                              是否强制上传，会覆盖文件 (default: false)
        --help, -h                           show help

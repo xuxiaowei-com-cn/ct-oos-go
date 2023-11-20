@@ -25,6 +25,11 @@ func UploadFileCommand() *cli.Command {
 			var partSize = context.Int64(common.PartSize)
 			var routine = context.Int(common.Routine)
 
+			err := CheckPartSize(partSize)
+			if err != nil {
+				return err
+			}
+
 			log.Printf("是否开启强制上传：%t", force)
 
 			return UploadFile(accessKey, secretKey, endpoint, bucketName, uri, file, partSize, routine, force)
@@ -55,7 +60,7 @@ func UploadFile(accessKey string, secretKey string, endpoint string, bucketName 
 		}
 	}
 
-	err = bucket.UploadFile(uri, file, partSize*1024, oos.Routines(routine))
+	err = bucket.UploadFile(uri, file, partSize*1024*1024, oos.Routines(routine))
 	if err != nil {
 		return err
 	}

@@ -30,6 +30,11 @@ func UploadFolderCommand() *cli.Command {
 			var partSize = context.Int64(common.PartSize)
 			var routine = context.Int(common.Routine)
 
+			err := CheckPartSize(partSize)
+			if err != nil {
+				return err
+			}
+
 			log.Printf("是否开启强制上传：%t", force)
 
 			fileInfo, err := os.Stat(folder)
