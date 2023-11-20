@@ -199,6 +199,8 @@ COPYRIGHT:
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
        --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
+       --microseconds                       日志打印时间精确到微秒 (default: false)
+       --long-file                          日志打印使用长包名 (default: false)
        --help, -h                           show help
     ```
 
@@ -233,6 +235,8 @@ COPYRIGHT:
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
        --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
+       --microseconds                       日志打印时间精确到微秒 (default: false)
+       --long-file                          日志打印使用长包名 (default: false)
        --help, -h                           show help
     ```
 
@@ -267,6 +271,8 @@ COPYRIGHT:
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
        --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
+       --microseconds                       日志打印时间精确到微秒 (default: false)
+       --long-file                          日志打印使用长包名 (default: false)
        --help, -h                           show help
     ```
 

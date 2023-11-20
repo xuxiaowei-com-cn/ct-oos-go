@@ -16,7 +16,8 @@ func UploadFileCommand() *cli.Command {
 		Usage: "上传 文件-分片",
 		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FileFlag(true),
 			common.PartSizeFlag(), common.RoutineFlag(), common.ForceFlag(), common.EnableLogFlag(),
-			common.LogNameFlag(), common.LogFolderFlag(), common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
+			common.LogNameFlag(), common.LogFolderFlag(), common.ConnectTimeoutSecFlag(),
+			common.ReadWriteTimeoutSecFlag(), common.MicrosecondsFlag(), common.LongFileFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -32,6 +33,20 @@ func UploadFileCommand() *cli.Command {
 			var logFolder = context.String(common.LogFolder)
 			var connectTimeoutSec = context.Int64(common.ConnectTimeoutSec)
 			var readWriteTimeoutSec = context.Int64(common.ReadWriteTimeoutSec)
+			var microseconds = context.Bool(common.Microseconds)
+			var longFile = context.Bool(common.LongFile)
+
+			flag := log.Ldate | log.Ltime
+
+			if microseconds {
+				flag = flag | log.Lmicroseconds
+			}
+
+			if longFile {
+				flag = flag | log.Llongfile
+			}
+
+			log.SetFlags(flag)
 
 			if enableLog {
 

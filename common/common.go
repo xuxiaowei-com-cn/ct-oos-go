@@ -34,6 +34,8 @@ const (
 	DefaultConnectTimeoutSec   = 3
 	ReadWriteTimeoutSec        = "read-write-timeout-sec" // 读写超时时间
 	DefaultReadWriteTimeoutSec = 3
+	Microseconds               = "microseconds"
+	LongFile                   = "long-file"
 )
 
 func AccessKeyFlag(required bool) cli.Flag {
@@ -149,6 +151,22 @@ func LogFolderFlag() cli.Flag {
 	return &cli.StringFlag{
 		Name:  LogFolder,
 		Usage: fmt.Sprintf("日志文件夹，默认是当前用户主目录下的 %s 文件夹", DefaultLogFolder),
+	}
+}
+
+func MicrosecondsFlag() cli.Flag {
+	return &cli.BoolFlag{
+		Name:  Microseconds,
+		Usage: "日志打印时间精确到微秒",
+		Value: false,
+	}
+}
+
+func LongFileFlag() cli.Flag {
+	return &cli.BoolFlag{
+		Name:  LongFile,
+		Usage: "日志打印使用长包名",
+		Value: false,
 	}
 }
 

@@ -11,8 +11,9 @@ func PutCommand() *cli.Command {
 		Name:  "put",
 		Usage: "上传对象",
 		Flags: append(common.CommonFlag(), common.UriFlag(false), common.StringFlag(false),
-			common.FileFlag(false), common.FolderFlag(false), common.ForceFlag(), common.EnableLogFlag(),
-			common.LogNameFlag(), common.LogFolderFlag(), common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
+			common.FileFlag(false), common.FolderFlag(false), common.ForceFlag(),
+			common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag(), common.ConnectTimeoutSecFlag(),
+			common.ReadWriteTimeoutSecFlag(), common.MicrosecondsFlag(), common.LongFileFlag()),
 		Subcommands: []*cli.Command{
 			PutStringCommand(),
 			PutFileCommand(),
