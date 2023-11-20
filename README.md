@@ -221,7 +221,7 @@ COPYRIGHT:
        --uri value                          上传路径-URI
        --string value                       上传字符串
        --file value                         上传文件
-       --folder value                       上传文件
+       --folder value                       上传文件夹
        --force                              是否强制上传，会覆盖文件 (default: false)
        --help, -h                           show help
     ```

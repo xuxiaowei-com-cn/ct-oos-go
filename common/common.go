@@ -83,7 +83,7 @@ func FileFlag(required bool) cli.Flag {
 func FolderFlag(required bool) cli.Flag {
 	return &cli.StringFlag{
 		Name:     Folder,
-		Usage:    "上传文件",
+		Usage:    "上传文件夹",
 		Required: required,
 	}
 }
