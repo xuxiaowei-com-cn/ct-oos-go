@@ -25,6 +25,8 @@ func UploadFileCommand() *cli.Command {
 			var partSize = context.Int64(common.PartSize)
 			var routine = context.Int(common.Routine)
 
+			log.Printf("是否开启强制上传：%t", force)
+
 			return UploadFile(accessKey, secretKey, endpoint, bucketName, uri, file, partSize, routine, force)
 		},
 	}
