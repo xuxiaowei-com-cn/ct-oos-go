@@ -52,6 +52,22 @@ func init() {
 }
 
 func main() {
+
+	// 打开或创建一个日志文件
+	file, err := os.Create("ct-oos-go.log")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(file)
+
+	// 设置日志输出位置为文件
+	log.SetOutput(file)
+
 	app := &cli.App{
 		Name:      Name,
 		Version:   versionInfo(),

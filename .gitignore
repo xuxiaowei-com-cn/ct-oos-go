@@ -39,3 +39,5 @@ build/
 /ct-oos-go-darwin-*
 
 /buildinfo/buildinfo
+
+/*.log
