@@ -19,7 +19,8 @@ func UploadFolderCommand() *cli.Command {
 		Name:  "folder",
 		Usage: "上传 文件夹-分片",
 		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FolderFlag(true),
-			common.ForceFlag(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag()),
+			common.ForceFlag(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag(),
+			common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -33,6 +34,8 @@ func UploadFolderCommand() *cli.Command {
 			var enableLog = context.Bool(common.EnableLog)
 			var logName = context.String(common.LogName)
 			var logFolder = context.String(common.LogFolder)
+			var connectTimeoutSec = context.Int64(common.ConnectTimeoutSec)
+			var readWriteTimeoutSec = context.Int64(common.ReadWriteTimeoutSec)
 
 			if enableLog {
 
@@ -69,7 +72,8 @@ func UploadFolderCommand() *cli.Command {
 			}
 
 			if fileInfo.IsDir() {
-				return UploadFolder(accessKey, secretKey, endpoint, bucketName, uri, folder, partSize, routine, force)
+				return UploadFolder(accessKey, secretKey, endpoint, bucketName, uri, folder, partSize, routine, force,
+					connectTimeoutSec, readWriteTimeoutSec)
 			} else {
 				return errors.New(fmt.Sprintf("路径 %s 不是一个文件夹", folder))
 			}
@@ -77,7 +81,8 @@ func UploadFolderCommand() *cli.Command {
 	}
 }
 
-func UploadFolder(accessKey string, secretKey string, endpoint string, bucketName string, uri string, folder string, partSize int64, routine int, force bool) error {
+func UploadFolder(accessKey string, secretKey string, endpoint string, bucketName string, uri string, folder string,
+	partSize int64, routine int, force bool, connectTimeoutSec int64, readWriteTimeoutSec int64) error {
 
 	start := time.Now()
 	log.Printf("上传 文件夹 开始")
@@ -103,7 +108,7 @@ func UploadFolder(accessKey string, secretKey string, endpoint string, bucketNam
 
 		log.Printf("上传 文件 %s 开始", path)
 
-		bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
+		bucket, err := common.GetBucketWithTimeOut(accessKey, secretKey, endpoint, bucketName, connectTimeoutSec, readWriteTimeoutSec)
 		if err != nil {
 			return err
 		}

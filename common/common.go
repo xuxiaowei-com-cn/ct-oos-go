@@ -12,24 +12,28 @@ import (
 )
 
 const (
-	AccessKey        = "access-key"
-	SecretKey        = "secret-key"
-	Endpoint         = "endpoint"
-	BucketName       = "bucket-name"
-	Uri              = "uri"
-	String           = "string"
-	File             = "file"
-	Folder           = "folder"
-	Force            = "force"
-	PartSize         = "part-size"
-	DefaultPartSize  = 5 // 默认分片大小，单位 M
-	MinPartSize      = 5 // 最小分片大小，单位 M
-	Routine          = "routine"
-	EnableLog        = "enable-log"
-	LogName          = "log-name"
-	LogFolder        = "log-folder"
-	DefaultLogFolder = ".ct-oos-go"
-	DefaultLogName   = "ct-oos-go"
+	AccessKey                  = "access-key"
+	SecretKey                  = "secret-key"
+	Endpoint                   = "endpoint"
+	BucketName                 = "bucket-name"
+	Uri                        = "uri"
+	String                     = "string"
+	File                       = "file"
+	Folder                     = "folder"
+	Force                      = "force"
+	PartSize                   = "part-size"
+	DefaultPartSize            = 5 // 默认分片大小，单位 M
+	MinPartSize                = 5 // 最小分片大小，单位 M
+	Routine                    = "routine"
+	EnableLog                  = "enable-log"
+	LogName                    = "log-name"
+	LogFolder                  = "log-folder"
+	DefaultLogFolder           = ".ct-oos-go"
+	DefaultLogName             = "ct-oos-go"           // 日志名称-前缀
+	ConnectTimeoutSec          = "connect-timeout-sec" // 连接超时时间
+	DefaultConnectTimeoutSec   = 3
+	ReadWriteTimeoutSec        = "read-write-timeout-sec" // 读写超时时间
+	DefaultReadWriteTimeoutSec = 3
 )
 
 func AccessKeyFlag(required bool) cli.Flag {
@@ -148,6 +152,22 @@ func LogFolderFlag() cli.Flag {
 	}
 }
 
+func ConnectTimeoutSecFlag() cli.Flag {
+	return &cli.Int64Flag{
+		Name:  ConnectTimeoutSec,
+		Usage: "连接超时时间，单位是 s",
+		Value: DefaultConnectTimeoutSec,
+	}
+}
+
+func ReadWriteTimeoutSecFlag() cli.Flag {
+	return &cli.Int64Flag{
+		Name:  ReadWriteTimeoutSec,
+		Usage: "读写超时时间，单位是 s",
+		Value: DefaultReadWriteTimeoutSec,
+	}
+}
+
 func LogConfig(name string, logFolder string) (*os.File, error) {
 
 	// 获取当前用户信息
@@ -223,10 +243,40 @@ func NewClient(accessKey string, secretKey string, endpoint string) (*oos.Client
 	return client, nil
 }
 
+// NewClientWithTimeOut create client
+func NewClientWithTimeOut(accessKey string, secretKey string, endpoint string, connectTimeoutSec int64, readWriteTimeoutSec int64) (*oos.Client, error) {
+	clientOptionV4 := oos.V4Signature(true)
+	isEnableSha256 := oos.EnableSha256ForPayload(false)
+	timeOut := oos.Timeout(connectTimeoutSec, readWriteTimeoutSec)
+	client, err := oos.New(endpoint, accessKey, secretKey, clientOptionV4, isEnableSha256, timeOut)
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
+}
+
 // GetBucket get the bucket
 func GetBucket(accessKey string, secretKey string, endpoint string, bucketName string) (*oos.Object, error) {
 	// New client
 	client, err := NewClient(accessKey, secretKey, endpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get bucket
+	bucket, err := client.Bucket(bucketName)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return bucket, nil
+}
+
+// GetBucketWithTimeOut get the bucket
+func GetBucketWithTimeOut(accessKey string, secretKey string, endpoint string, bucketName string, connectTimeoutSec int64, readWriteTimeoutSec int64) (*oos.Object, error) {
+	// New client
+	client, err := NewClientWithTimeOut(accessKey, secretKey, endpoint, connectTimeoutSec, readWriteTimeoutSec)
 	if err != nil {
 		return nil, err
 	}

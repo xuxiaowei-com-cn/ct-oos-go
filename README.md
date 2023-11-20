@@ -197,6 +197,8 @@ COPYRIGHT:
        --enable-log                         开启日志 (default: false)
        --log-name value                     日志名称-前缀 (default: "ct-oos-go")
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
+       --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
+       --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
        --help, -h                           show help
     ```
 
@@ -229,6 +231,8 @@ COPYRIGHT:
        --enable-log                         开启日志 (default: false)
        --log-name value                     日志名称-前缀 (default: "ct-oos-go")
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
+       --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
+       --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
        --help, -h                           show help
     ```
 
@@ -261,6 +265,8 @@ COPYRIGHT:
        --enable-log                         开启日志 (default: false)
        --log-name value                     日志名称-前缀 (default: "ct-oos-go")
        --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
+       --connect-timeout-sec value          连接超时时间，单位是 s (default: 3)
+       --read-write-timeout-sec value       读写超时时间，单位是 s (default: 3)
        --help, -h                           show help
     ```
 

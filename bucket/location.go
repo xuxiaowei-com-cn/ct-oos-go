@@ -11,7 +11,8 @@ func GetLocationCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "get-location",
 		Usage: "获取 location bucket",
-		Flags: append(common.CommonFlagRequired(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag()),
+		Flags: append(common.CommonFlagRequired(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag(),
+			common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)

@@ -15,7 +15,8 @@ func PutFileCommand() *cli.Command {
 		Name:  "file",
 		Usage: "上传 文件",
 		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FileFlag(true),
-			common.ForceFlag(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag()),
+			common.ForceFlag(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag(),
+			common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -27,6 +28,8 @@ func PutFileCommand() *cli.Command {
 			var enableLog = context.Bool(common.EnableLog)
 			var logName = context.String(common.LogName)
 			var logFolder = context.String(common.LogFolder)
+			var connectTimeoutSec = context.Int64(common.ConnectTimeoutSec)
+			var readWriteTimeoutSec = context.Int64(common.ReadWriteTimeoutSec)
 
 			if enableLog {
 
@@ -52,17 +55,19 @@ func PutFileCommand() *cli.Command {
 
 			log.Printf("是否开启强制上传：%t", force)
 
-			return PutObjectFromFile(accessKey, secretKey, endpoint, bucketName, uri, file, force)
+			return PutObjectFromFile(accessKey, secretKey, endpoint, bucketName, uri, file, force,
+				connectTimeoutSec, readWriteTimeoutSec)
 		},
 	}
 }
 
-func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, uri string, file string, force bool) error {
+func PutObjectFromFile(accessKey string, secretKey string, endpoint string, bucketName string, uri string, file string,
+	force bool, connectTimeoutSec int64, readWriteTimeoutSec int64) error {
 
 	start := time.Now()
 	log.Printf("上传 文件 开始")
 
-	bucket, err := common.GetBucket(accessKey, secretKey, endpoint, bucketName)
+	bucket, err := common.GetBucketWithTimeOut(accessKey, secretKey, endpoint, bucketName, connectTimeoutSec, readWriteTimeoutSec)
 	if err != nil {
 		return err
 	}

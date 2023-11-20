@@ -14,7 +14,8 @@ func UploadCommand() *cli.Command {
 		Usage: "上传文件-分片",
 		Flags: append(common.CommonFlag(), common.UriFlag(false), common.FileFlag(false),
 			common.FolderFlag(false), common.PartSizeFlag(), common.RoutineFlag(), common.ForceFlag(),
-			common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag()),
+			common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag(),
+			common.ConnectTimeoutSecFlag(), common.ReadWriteTimeoutSecFlag()),
 		Subcommands: []*cli.Command{
 			UploadFileCommand(),
 			UploadFolderCommand(),
