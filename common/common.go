@@ -4,22 +4,32 @@ import (
 	"fmt"
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go-sdk/oos"
+	"log"
+	"os"
+	"os/user"
+	"path/filepath"
+	"time"
 )
 
 const (
-	AccessKey       = "access-key"
-	SecretKey       = "secret-key"
-	Endpoint        = "endpoint"
-	BucketName      = "bucket-name"
-	Uri             = "uri"
-	String          = "string"
-	File            = "file"
-	Folder          = "folder"
-	Force           = "force"
-	PartSize        = "part-size"
-	DefaultPartSize = 5 // 默认分片大小，单位 M
-	MinPartSize     = 5 // 最小分片大小，单位 M
-	Routine         = "routine"
+	AccessKey        = "access-key"
+	SecretKey        = "secret-key"
+	Endpoint         = "endpoint"
+	BucketName       = "bucket-name"
+	Uri              = "uri"
+	String           = "string"
+	File             = "file"
+	Folder           = "folder"
+	Force            = "force"
+	PartSize         = "part-size"
+	DefaultPartSize  = 5 // 默认分片大小，单位 M
+	MinPartSize      = 5 // 最小分片大小，单位 M
+	Routine          = "routine"
+	EnableLog        = "enable-log"
+	LogName          = "log-name"
+	LogFolder        = "log-folder"
+	DefaultLogFolder = ".ct-oos-go"
+	DefaultLogName   = "ct-oos-go"
 )
 
 func AccessKeyFlag(required bool) cli.Flag {
@@ -113,6 +123,75 @@ func RoutineFlag() cli.Flag {
 		Usage: "线程",
 		Value: 3,
 	}
+}
+
+func EnableLogFlag() cli.Flag {
+	return &cli.BoolFlag{
+		Name:  EnableLog,
+		Usage: "开启日志",
+		Value: false,
+	}
+}
+
+func LogNameFlag() cli.Flag {
+	return &cli.StringFlag{
+		Name:  LogName,
+		Usage: "日志名称-前缀",
+		Value: DefaultLogName,
+	}
+}
+
+func LogFolderFlag() cli.Flag {
+	return &cli.StringFlag{
+		Name:  LogFolder,
+		Usage: fmt.Sprintf("日志文件夹，默认是当前用户主目录下的 %s 文件夹", DefaultLogFolder),
+	}
+}
+
+func LogConfig(name string, logFolder string) (*os.File, error) {
+
+	// 获取当前用户信息
+	currentUser, err := user.Current()
+	if err != nil {
+		return nil, fmt.Errorf("获取当前用于异常：%s\n", err)
+	}
+
+	// 获取当前用户的主目录
+	homeDir := currentUser.HomeDir
+
+	if logFolder == "" {
+		logFolder = filepath.Join(homeDir, DefaultLogFolder)
+	}
+
+	// 使用os.Stat判断文件夹是否存在
+	_, err = os.Stat(logFolder)
+
+	// 如果文件夹不存在，则创建
+	if os.IsNotExist(err) {
+		err := os.MkdirAll(logFolder, os.ModePerm)
+		if err != nil {
+			return nil, fmt.Errorf("创建日志文件夹异常：%s\n", err)
+		}
+	} else if err != nil {
+		// 如果发生其他错误，返回错误信息
+		return nil, fmt.Errorf("检查日志文件夹异常：%s\n", err)
+	}
+
+	// 获取当前时间
+	currentTime := time.Now()
+
+	// 格式化为日期字符串
+	dateString := currentTime.Format("2006-01-02_15-04-05")
+
+	logFile := filepath.Join(logFolder, name+"-"+dateString+".log")
+
+	// 打开或创建一个日志文件
+	file, err := os.Create(logFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return file, nil
 }
 
 func CommonFlag() []cli.Flag {

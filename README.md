@@ -194,6 +194,9 @@ COPYRIGHT:
        --secret-key value                   天翼云 SecretKey [%CT_OOS_SECRET_KEY%]
        --endpoint value                     天翼云 Endpoint [%CT_OOS_ENDPOINT%]
        --bucket-name value, --bucket value  天翼云 bucketName [%CT_OOS_BUCKET_NAME%]
+       --enable-log                         开启日志 (default: false)
+       --log-name value                     日志名称-前缀 (default: "ct-oos-go")
+       --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --help, -h                           show help
     ```
 
@@ -223,6 +226,9 @@ COPYRIGHT:
        --file value                         上传文件
        --folder value                       上传文件夹
        --force                              是否强制上传，会覆盖文件 (default: false)
+       --enable-log                         开启日志 (default: false)
+       --log-name value                     日志名称-前缀 (default: "ct-oos-go")
+       --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --help, -h                           show help
     ```
 
@@ -252,6 +258,9 @@ COPYRIGHT:
        --part-size value                    文件分片大小，单位 M，最小值 5 M，分片数量不能超过 10000 (default: 5)
        --routine value                      线程 (default: 3)
        --force                              是否强制上传，会覆盖文件 (default: false)
+       --enable-log                         开启日志 (default: false)
+       --log-name value                     日志名称-前缀 (default: "ct-oos-go")
+       --log-folder value                   日志文件夹，默认是当前用户主目录下的 .ct-oos-go 文件夹
        --help, -h                           show help
     ```
 

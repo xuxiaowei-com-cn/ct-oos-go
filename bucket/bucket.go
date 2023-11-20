@@ -9,7 +9,7 @@ func GetBucketCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "bucket",
 		Usage: "桶",
-		Flags: common.CommonFlag(),
+		Flags: append(common.CommonFlag(), common.EnableLogFlag(), common.LogNameFlag(), common.LogFolderFlag()),
 		Subcommands: []*cli.Command{
 			GetLocationCommand(),
 		},

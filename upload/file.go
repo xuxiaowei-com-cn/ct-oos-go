@@ -4,7 +4,9 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/ct-oos-go-sdk/oos"
 	"github.com/xuxiaowei-com-cn/ct-oos-go/common"
+	"io"
 	"log"
+	"os"
 	"time"
 )
 
@@ -13,7 +15,8 @@ func UploadFileCommand() *cli.Command {
 		Name:  "file",
 		Usage: "上传 文件-分片",
 		Flags: append(common.CommonFlagRequired(), common.UriFlag(true), common.FileFlag(true),
-			common.PartSizeFlag(), common.RoutineFlag(), common.ForceFlag()),
+			common.PartSizeFlag(), common.RoutineFlag(), common.ForceFlag(), common.EnableLogFlag(),
+			common.LogNameFlag(), common.LogFolderFlag()),
 		Action: func(context *cli.Context) error {
 			var accessKey = context.String(common.AccessKey)
 			var secretKey = context.String(common.SecretKey)
@@ -24,6 +27,31 @@ func UploadFileCommand() *cli.Command {
 			var force = context.Bool(common.Force)
 			var partSize = context.Int64(common.PartSize)
 			var routine = context.Int(common.Routine)
+			var enableLog = context.Bool(common.EnableLog)
+			var logName = context.String(common.LogName)
+			var logFolder = context.String(common.LogFolder)
+
+			if enableLog {
+
+				file, err := common.LogConfig(logName, logFolder)
+				if err != nil {
+					return err
+				}
+
+				defer func(file *os.File) {
+					err := file.Close()
+					if err != nil {
+						log.Fatal(err)
+					}
+				}(file)
+
+				// 设置日志输出到控制台和日志文件
+				multi := io.MultiWriter(os.Stdout, file)
+				log.SetOutput(multi)
+
+				// 设置日志输出位置为文件
+				// log.SetOutput(file)
+			}
 
 			err := CheckPartSize(partSize)
 			if err != nil {
