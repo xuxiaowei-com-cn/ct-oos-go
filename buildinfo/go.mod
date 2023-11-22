@@ -2,7 +2,7 @@ module github.com/xuxiaowei-com-cn/ct-oos-go/buildinfo
 
 go 1.21
 
-require github.com/xuxiaowei-com-cn/git-go v0.0.0-20231101104501-6b2d5ca8ec9c
+require github.com/xuxiaowei-com-cn/git-go v0.0.0-20231122005800-4ad6f53cab36
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
